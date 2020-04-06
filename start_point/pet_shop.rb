@@ -43,11 +43,13 @@ def find_pet_by_name(pet_shop, pet_name)
 end
 
 def remove_pet_by_name(pet_shop, pet_name_to_remove)
-   for pet_found in pet_shop[:pets]
-        if pet_found[:name] == pet_name_to_remove
-            pet_shop[:pets].delete(pet_found)
-        end
-    end
+#    for pet_found in pet_shop[:pets]
+#         if pet_found[:name] == pet_name_to_remove
+#             pet_shop[:pets].delete(pet_found)
+#         end
+#     end
+    found_pet = find_pet_by_name(pet_shop, pet_name_to_remove)
+    pet_shop[:pets].delete(found_pet)
 end
 
 def add_pet_to_stock(pet_shop, new_pet)
@@ -79,22 +81,25 @@ def customer_can_afford_pet(customer, new_pet)
     #     return true
     # end
 
-    if customer[:cash] >= new_pet[:price]
-        return true
-    else 
-        return false
-    end
+    return customer[:cash] >= new_pet[:price]
+    #     return true
+    # else 
+    #     return false
+    # end
 
 end
 
 # First version of function. Works for test starting on line 198 of pet_shop_spec
 def sell_pet_to_customer(pet_shop, pet, customer)
-    
-    remove_pet_by_name(pet_shop, pet[:name])
-    remove_customer_cash(customer, pet[:price])
-    add_pet_to_customer(customer, pet)
-    increase_pets_sold(pet_shop, 1)
-    pet_shop[:admin][:total_cash] += pet[:price]
-
+    if (pet == nil)
+        return false
+    else
+        remove_pet_by_name(pet_shop, pet[:name])
+        remove_customer_cash(customer, pet[:price])
+        add_pet_to_customer(customer, pet)
+        increase_pets_sold(pet_shop, 1)
+        pet_shop[:admin][:total_cash] += pet[:price]
+    end
+    # retu
 end
 
